@@ -1,11 +1,11 @@
 package com.application.payment.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -13,12 +13,13 @@ import java.time.OffsetDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Table(name = "payment")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String firstName;
 
@@ -28,7 +29,9 @@ public class Payment {
 
     private String encryptedCard;
 
+    private BigDecimal amount;
+
     private String clientId;
 
-    private OffsetDateTime timestamp;
+    private LocalDateTime timestamp;
 }

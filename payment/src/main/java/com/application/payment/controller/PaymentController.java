@@ -2,8 +2,8 @@ package com.application.payment.controller;
 
 import com.application.payment.api.PaymentApi;
 import com.application.payment.model.PaymentRequest;
-import com.application.payment.model.PaymentResponse;
 import com.application.payment.service.PaymentService;
+import com.application.payment.util.PaymentUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +19,25 @@ public class PaymentController implements PaymentApi {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired
+    PaymentUtil paymentUtil;
+
     @Override
-    public ResponseEntity<PaymentResponse> createPayment(PaymentRequest paymentRequest) {
+    public ResponseEntity<String> createPayment(PaymentRequest paymentRequest) {
         log.info("Entered create payment in Payment Controller : {}",paymentRequest);
-        PaymentResponse paymentResponse = paymentService.createPayment(paymentRequest);
-        if (paymentResponse == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        try {
+            paymentUtil.verifyNullCheck(paymentRequest);
+            paymentService.createPayment(paymentRequest);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid input while creating payment: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Invalid request data: " + e.getMessage());
+        } catch (Exception e) {
+            log.error("Unexpected error while creating payment: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred while processing the payment.");
         }
-        return ResponseEntity.ok(paymentResponse);
+
+        return ResponseEntity.ok("Payment created successfully!");
     }
 }

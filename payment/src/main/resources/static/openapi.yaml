@@ -21,7 +21,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaymentResponse'
+                type: string
+                example: "Payment created successfully"
         '400':
           description: Validation error
         '500':
@@ -44,13 +45,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WebhookResponse'
+                type: string
+                example: "Webhook registered successfully"
         '400':
           description: Validation error
         '500':
           description: Internal server error
 components:
   schemas:
+
     PaymentRequest:
       type: object
       properties:
@@ -62,30 +65,12 @@ components:
           type: string
         cardNumber:
           type: string
+        amount:
+          type: number
         clientId:
           type: string
-      required:
-        - firstName
-        - lastName
-        - zip
-        - cardNumber
-        - clientId
-    PaymentResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        zip:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        clientId:
-          type: string
+
+
     WebhookRequest:
       type: object
       properties:
@@ -93,18 +78,3 @@ components:
           type: string
         clientId:
           type: string
-      required:
-        - url
-        - clientId
-    WebhookResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-        url:
-          type: string
-        clientId:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
