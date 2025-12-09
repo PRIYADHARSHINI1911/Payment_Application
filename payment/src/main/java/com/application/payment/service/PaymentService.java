@@ -17,6 +17,8 @@ public class PaymentService {
     @Autowired
     PaymentRepository paymentRepository;
 
+    @Autowired
+    EncryptionService encryptionService;
     public PaymentResponse createPayment(PaymentRequest paymentRequest) {
         log.debug("Entered createPayment in PaymentService");
         Payment payment = new Payment();
@@ -25,10 +27,11 @@ public class PaymentService {
         payment.setZip(paymentRequest.getZip());
         payment.setClientId(paymentRequest.getClientId());
         payment.setTimestamp(OffsetDateTime.now());
-        payment.setEncryptedCard(paymentRequest.getCardNumber());
+        payment.setEncryptedCard(encryptionService.encrypt(paymentRequest.getCardNumber()));
         payment = paymentRepository.save(payment);
         log.info("Added payment record to DB: {}", payment);
         return populatePaymentResponse(payment);
+
     }
 
     private PaymentResponse populatePaymentResponse(Payment payment) {

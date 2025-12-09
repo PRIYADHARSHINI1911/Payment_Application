@@ -17,3 +17,7 @@ server:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+encryption:
+  aes:
+    key: ${AES_SECRET_KEY:3rnRgXb3Fms52dak4NYq1jiUgDmRmrtyKk166sMGUsQ=}
