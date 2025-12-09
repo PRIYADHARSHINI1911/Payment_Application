@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Payment Application API
+  version: 1.0.0
+paths:
+  /api/payments:
+    post:
+      tags:
+        - payment
+      operationId: createPayment
+      summary: Create a new payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '201':
+          description: Payment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          description: Validation error
+        '500':
+          description: Internal server error
+  /api/webhooks:
+    post:
+      tags:
+        - webhook
+      operationId: registerWebhook
+      summary: Register a new webhook URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookRequest'
+      responses:
+        '201':
+          description: Webhook registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponse'
+        '400':
+          description: Validation error
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    PaymentRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        zip:
+          type: string
+        cardNumber:
+          type: string
+        clientId:
+          type: string
+      required:
+        - firstName
+        - lastName
+        - zip
+        - cardNumber
+        - clientId
+    PaymentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        zip:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    WebhookRequest:
+      type: object
+      properties:
+        url:
+          type: string
+        clientId:
+          type: string
+      required:
+        - url
+        - clientId
+    WebhookResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        clientId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
