@@ -84,6 +84,8 @@ components:
         timestamp:
           type: string
           format: date-time
+        clientId:
+          type: string
     WebhookRequest:
       type: object
       properties:
