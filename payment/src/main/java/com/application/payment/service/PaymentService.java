@@ -17,10 +17,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
-import java.math.BigInteger;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -67,7 +65,7 @@ public class PaymentService {
     public void triggerWebhooks(String clientId, Payment payment) {
         List<Webhook> webhooks = webhookRepository.findByClientId(clientId);
         if(webhooks.isEmpty()){
-            throw new IllegalArgumentException("webhook url is empty");
+            throw new IllegalArgumentException("Webhook URL is empty for this clientId, please register a webhook");
         }
         for (Webhook hook : webhooks) {
             log.debug("Webhook record: {}", hook);
@@ -99,7 +97,7 @@ public class PaymentService {
                         .doOnError(e -> {
                             retryRecord.setRetryCount(retryRecord.getRetryCount() + 1);
                             retryRecord.setLastAttempt(LocalDateTime.now());
-                            retryWebhookRepository.save(retryRecord); // Save retry info after each failure
+                            retryWebhookRepository.save(retryRecord);
                         })
         );
 

@@ -1,6 +1,7 @@
 package com.application.payment.controller;
 
 import com.application.payment.api.WebhookApi;
+import com.application.payment.model.StringResponse;
 import com.application.payment.model.WebhookRequest;
 import com.application.payment.service.WebhookService;
 import com.application.payment.util.PaymentUtil;
@@ -23,20 +24,24 @@ public class WebhookController implements WebhookApi {
     PaymentUtil paymentUtil;
 
     @Override
-    public ResponseEntity<String> registerWebhook(WebhookRequest webhookRequest) {
+    public ResponseEntity<StringResponse> registerWebhook(WebhookRequest webhookRequest) {
         log.info("Entered register webhook in Webhook Controller : {}",webhookRequest);
+        StringResponse stringResponse = new StringResponse();
         try {
             paymentUtil.verifyNullCheck(webhookRequest);
             webhookService.registerWebhook(webhookRequest);
         }  catch (IllegalArgumentException e) {
             log.error("Invalid input while registering Webhook: {}", e.getMessage());
+            stringResponse.setMessage("Invalid request data: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Invalid request data: " + e.getMessage());
+                    .body(stringResponse);
         } catch (Exception e) {
             log.error("Unexpected error while registering Webhook: {}", e.getMessage());
+            stringResponse.setMessage("An unexpected error occurred while registering the Webhook.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An unexpected error occurred while registering the Webhook.");
+                    .body(stringResponse);
         }
-        return ResponseEntity.ok("Webhook registered successfully!");
+        stringResponse.setMessage("Webhook registered successfully!");
+        return ResponseEntity.ok(stringResponse);
     }
 }

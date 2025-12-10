@@ -21,12 +21,12 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                example: "Payment created successfully"
+                $ref: '#/components/schemas/StringResponse'
         '400':
           description: Validation error
         '500':
           description: Internal server error
+
   /api/webhooks:
     post:
       tags:
@@ -45,8 +45,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                example: "Webhook registered successfully"
+                $ref: '#/components/schemas/StringResponse'
         '400':
           description: Validation error
         '500':
@@ -54,27 +53,41 @@ paths:
 components:
   schemas:
 
+    StringResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Operation completed successfully"
+
     PaymentRequest:
       type: object
       properties:
         firstName:
           type: string
+          example: "John"
         lastName:
           type: string
+          example: "Doe"
         zip:
           type: string
+          example: "12345"
         cardNumber:
           type: string
+          example: "4111111111111111"
         amount:
           type: number
+          example: 100.50
         clientId:
           type: string
-
+          example: "client_123"
 
     WebhookRequest:
       type: object
       properties:
         url:
           type: string
+          example: "http://localhost:8080/dummywebhook/receive"
         clientId:
           type: string
+          example: "client_123"
