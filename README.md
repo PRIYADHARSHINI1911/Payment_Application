@@ -53,7 +53,7 @@ Payment Application allows clients to create payments and register webhooks to r
 		- Email: admin@admin.com
 		- Password: admin
 
-	- Register PostgreSQL Server:
+	- If server dropdown is empty, Register PostgreSQL Server:
      - Right-click on **Servers → Register → Server...**
      - A pop-up will open. Enter the following details:
        - Name: **Payment Database** (any name)
