@@ -1,5 +1,26 @@
 # Payment_Application
 
+Project Summary
+
+Payment Application allows clients to create payments and register webhooks to receive asynchronous notifications after payment creation. The system includes retry logic for failed webhook calls and securely stores card numbers in encrypted format. The application can be run locally or via Docker.
+
+Features
+
+- Create payments and register webhooks for clients
+- Asynchronous webhook processing
+- Retry logic for failed webhook calls
+- Card number encryption
+- Local run and Docker support
+- Swagger/OpenAPI documentation included
+
+Tech Stack
+
+- Java 17, Spring Boot
+- PostgreSQL, pgAdmin
+- Docker, Docker Compose
+- Swagger UI, Postman
+- Gradle
+
 RUNNING THE PROJECT LOCALLY (WITHOUT DOCKER)
 
 1. Install Prerequisites
@@ -97,18 +118,16 @@ RUNNING THE PROJECT LOCALLY (WITHOUT DOCKER)
 
    Press Ctrl + C in the terminal to stop Spring Boot
 
-HOW I WORKED
-
-1)Created a simple architectural diagram in Draw.io for add webhook URLs and create payment.
-2)Designed API request/response and database structure.
-3)Created Spring project from initializer and added it to GitHub.
-4)Created basic project structure and configured DB connections.
-5)Added openapi.yaml file and respective configurations in build.gradle.
-6)Implemented createPayment API and registerWebhook API.
-7)Implemented POST call to external URLs.
-8)Implemented card number encryption logic.
-9)Implemented retry logic for external URLs.
-10)Added mock WebController API to mock external URLs for successful responses.
-11)Added Dockerfile and ddocker-compose.yaml
-
-Testing: Functionality was tested after completing each feature.
+How I Worked
+1. Created a simple architectural diagram in Draw.io for adding webhook URLs and creating payments
+2. Designed API request/response and database structure
+3. Created Spring project from initializer and added it to GitHub
+4. Created basic project structure and configured DB connections
+5. Added openapi.yaml file and respective configurations in build.gradle
+6. Implemented createPayment API and registerWebhook API
+7. Implemented POST calls to external URLs
+8. Implemented card number encryption logic
+9. Implemented retry logic for external URLs
+10. Added Mock WebController API to simulate successful responses
+11. Added Dockerfile and docker-compose.yaml
+Testing: Performed after completing each feature.
