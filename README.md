@@ -32,13 +32,14 @@ Payment Application allows clients to create payments and register webhooks to r
 	- Clone the repository to your local machine or Download it as zip.
 
 2. Build Docker Containers
-	- Build the necessary Docker containers using Docker Compose:
-		- docker-compose build
+	- Build the necessary Docker containers using Docker Compose
+		- Open command in the path where docker-compose.yaml is located and give the below command
+			- docker-compose build
 
 	- This command will pull the required images and build the payment-app container.
 
 3. Start the Application
-	- Start the Docker containers for PostgreSQL, pgAdmin, and the Payment Application:
+	- Start the Docker containers for PostgreSQL, pgAdmin, and the Payment Application in the samd cmd.
 		- docker-compose up -d
 
 	- This will run the following services:
@@ -54,13 +55,13 @@ Payment Application allows clients to create payments and register webhooks to r
 		- Password: admin
 
 	- If server dropdown is empty, Register PostgreSQL Server:
-     - Right-click on **Servers → Register → Server...**
-     - A pop-up will open. Enter the following details:
-       - Name: **Payment Database** (any name)
-       - Host: **postgres**
-       - Username: **postgres**
-       - Password: **postgres**
-     - Click **Save**
+	     - Right-click on **Servers → Register → Server...**
+	     - A pop-up will open. Enter the following details:
+	       - Name: **Payment Database** (any name)
+	       - Host: **postgres**
+	       - Username: **postgres**
+	       - Password: **postgres**
+	     - Click **Save**
 
 
 	- Access the Database:
@@ -84,8 +85,19 @@ Payment Application allows clients to create payments and register webhooks to r
 		- Login again with:
 			- Email: admin@admin.com
 			- Password: admin
+7. Architectural Diagram
 
-7. Stop the Application
+   - An architectural diagram illustrating the project flow and feature refinement
+   is provided as a Draw.io file (attached). 
+   - You can open it with Draw.io or the online editor at https://app.diagrams.net/
+   to understand the system design and component interactions.
+
+8. Testing Artifacts
+
+   - Sample requests, instructions and Testing scenarios are provided in the 'testing-artifacts' folder.
+   - Use the JSON files with Postman or Swagger UI to test the application endpoints.     
+
+9. Stop the Application
 	- To stop the application and shut down containers:
 		- docker-compose down
 
