@@ -1,6 +1,6 @@
 package com.application.payment.controller;
 
-import com.application.payment.api.WebhookApi;
+import com.application.payment.api.WebhookControllerApi;
 import com.application.payment.model.StringResponse;
 import com.application.payment.model.WebhookRequest;
 import com.application.payment.service.WebhookService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1")
 @Slf4j
-public class WebhookController implements WebhookApi {
+public class WebhookController implements WebhookControllerApi {
 
     @Autowired
     WebhookService webhookService;

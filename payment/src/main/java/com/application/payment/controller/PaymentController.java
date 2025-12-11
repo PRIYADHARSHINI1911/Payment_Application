@@ -1,6 +1,6 @@
 package com.application.payment.controller;
 
-import com.application.payment.api.PaymentApi;
+import com.application.payment.api.PaymentControllerApi;
 import com.application.payment.model.PaymentRequest;
 import com.application.payment.model.StringResponse;
 import com.application.payment.service.PaymentService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1")
 @Slf4j
-public class PaymentController implements PaymentApi {
+public class PaymentController implements PaymentControllerApi {
 
     @Autowired
     PaymentService paymentService;
@@ -25,7 +25,7 @@ public class PaymentController implements PaymentApi {
 
     @Override
     public ResponseEntity<StringResponse> createPayment(PaymentRequest paymentRequest) {
-        log.info("Entered create payment in Payment Controller : {}",paymentRequest);
+        log.info("Entered create payment in Payment Controller");
         StringResponse stringResponse = new StringResponse();
         try {
             paymentUtil.verifyNullCheck(paymentRequest);

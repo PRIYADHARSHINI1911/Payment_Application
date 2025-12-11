@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/dummywebhook")
-public class DummyWebhookController {
+@RequestMapping("/mockWebhook")
+public class MockWebhookController {
 
     /**
-     * DummyController to mock external URL for testing
+     * MockController to mock external URL for testing
      * @param payment
      * @return
      */

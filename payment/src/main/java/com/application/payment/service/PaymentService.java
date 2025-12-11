@@ -65,23 +65,24 @@ public class PaymentService {
     public void triggerWebhooks(String clientId, Payment payment) {
         List<Webhook> webhooks = webhookRepository.findByClientId(clientId);
         if(webhooks.isEmpty()){
-            throw new IllegalArgumentException("Webhook URL is empty for this clientId, please register a webhook");
+            log.error("Webhook URL is empty for this clientId, please register a webhook");
         }
-        for (Webhook hook : webhooks) {
-            log.debug("Webhook record: {}", hook);
-            sendWebhookWithRetry(hook.getId(), hook.getUrl(), payment, maxRetryFrequency);
+        for (Webhook webhook : webhooks) {
+            log.debug("Webhook record: {}", webhook);
+            sendWebhookWithRetry(webhook.getId(), webhook.getUrl(), payment, maxRetryFrequency);
         }
     }
 
 
     private void sendWebhookWithRetry(Long webhookId, String url, Payment payment, int maxRetries) {
-        log.debug("Entered with sendWebhookWithRetry()");
+        log.debug("Entered in sendWebhookWithRetry()");
 
         RetryWebhook retryRecord = new RetryWebhook(webhookId, payment.getId(), PaymentStatus.PENDING);
         retryWebhookRepository.save(retryRecord);
 
         PaymentDTO paymentDTO = new PaymentDTO(payment.getId(), webhookId, payment.getClientId(),
-                payment.getEncryptedCard(), PaymentStatus.COMPLETED );
+                payment.getFirstName(), payment.getLastName(), payment.getZip(), payment.getAmount(),
+                payment.getTimestamp(), payment.getEncryptedCard(), PaymentStatus.COMPLETED );
 
         Mono<Void> request = Mono.defer(() ->
                 webClient.post()
@@ -90,11 +91,13 @@ public class PaymentService {
                         .retrieve()
                         .bodyToMono(Void.class)
                         .doOnSuccess(v -> {
+                            log.debug("POST for external webhook is completed");
                             retryRecord.setStatus(PaymentStatus.COMPLETED);
                             retryRecord.setLastAttempt(LocalDateTime.now());
                             retryWebhookRepository.save(retryRecord);
                         })
                         .doOnError(e -> {
+                            log.debug("POST for external webhook is failed, retrying after some time...");
                             retryRecord.setRetryCount(retryRecord.getRetryCount() + 1);
                             retryRecord.setLastAttempt(LocalDateTime.now());
                             retryWebhookRepository.save(retryRecord);
@@ -110,7 +113,5 @@ public class PaymentService {
                 })
                 .subscribe();
     }
-
-
 
 }
