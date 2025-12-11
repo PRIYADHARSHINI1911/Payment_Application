@@ -20,7 +20,7 @@ services:
 
   payment-app:
     build:
-      context: ./payment
+      context: ./${APP_DIR}
       dockerfile: Dockerfile
     container_name: payment-app
     depends_on:
