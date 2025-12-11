@@ -104,7 +104,7 @@ public class PaymentService {
                         })
         );
 
-        request.retryWhen(Retry.backoff(maxRetries, Duration.ofSeconds(maxRetryDuration)))
+        request.retryWhen(Retry.backoff(maxRetries - 1, Duration.ofSeconds(maxRetryDuration)))
                 .onErrorResume(e -> {
                     log.error("Webhook failed after {} retries for paymentId: {}", maxRetries, payment.getId());
                     retryRecord.setStatus(PaymentStatus.FAILED);

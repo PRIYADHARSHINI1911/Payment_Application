@@ -30,4 +30,4 @@ encryption:
 maximum:
   retry:
     times: 3
-    duration: 30
+    duration: 5
