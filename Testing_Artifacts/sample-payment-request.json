@@ -1,0 +1,8 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "zip": "12345",
+  "cardNumber": "4111111111111111",
+  "amount": 100.5,
+  "clientId": "client_123"
+}
