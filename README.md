@@ -24,7 +24,7 @@ Payment Application allows clients to create payments and register webhooks to r
 ### RUNNING THE PROJECT USING DOCKER (RECOMMENDED)
 
 - Prerequisites:
-	 - Docker: https://www.docker.com/get-started
+	 - Docker deskktop: https://www.docker.com/get-started (Please make sure to check all the 3 boxes while installing Docker desktop)
 
 ## Steps to Set Up and Run the Application:
 
